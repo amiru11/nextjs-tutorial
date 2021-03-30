@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { Fragment } from 'react';
 
 function Post() {
-  const router = useRouter()
+  const router = useRouter();
   const { id } = router.query;
 
   return (
@@ -22,7 +22,7 @@ function Post() {
         </li>
       </ul>
     </Fragment>
-  )
-};
+  );
+}
 
 export default Post;
