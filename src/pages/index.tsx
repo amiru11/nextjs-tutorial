@@ -1,7 +1,19 @@
+import { GetStaticProps, InferGetStaticPropsType } from 'next';
 import Head from 'next/head';
 import Link from 'next/link';
+import { getSortedPostsData, Post } from 'lib/posts';
 
-export default function Home() {
+// getStaticProps only runs on the server-side.
+export const getStaticProps: GetStaticProps = async () => {
+  const allPostsData: Post[] = getSortedPostsData();
+  return {
+    props: {
+      allPostsData,
+    },
+  };
+};
+
+export default function Home({ allPostsData }: InferGetStaticPropsType<typeof getStaticProps>) {
   return (
     <div className="container">
       <Head>
@@ -42,6 +54,17 @@ export default function Home() {
             <p>Instantly deploy your Next.js site to a public URL with Vercel.</p>
           </a>
         </div>
+        <ul>
+          {allPostsData.map(({ id, date, title }) => (
+            <li key={id}>
+              {title}
+              <br />
+              {id}
+              <br />
+              {date}
+            </li>
+          ))}
+        </ul>
       </main>
 
       <footer>
